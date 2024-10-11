@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+
+# Virtual environment
+lib-env/
+
+# Environment variables
+.env
+*.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+logs/
+*.log
