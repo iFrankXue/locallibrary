@@ -1,0 +1,16 @@
+@startuml
+class Library {
+    + String name
+}
+
+class Book {
+    + String title
+}
+
+class Member {
+    + String name
+}
+
+Library "1" -- "0..*" Book : has
+Member "1" -- "0..*" Book : borrows
+@enduml
