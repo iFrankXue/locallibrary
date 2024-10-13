@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% comment %} <h1>Title: {{ book.title }}</h1> {% endcomment %}
+
+<h1>Author: {{ author.last_name }}, {{ author.first_name }} </h1>
+<p>
+    ({{ author.date_of_birth }} - {{ author.date_of_death}})<br>
+    {% if author.country %} Nationality: {{ author.country }} {% endif %}
+</p>
+
+<div style="margin-left: 20px; margin-top:20px">
+    <h4>Books</h4>
+
+    {% for book in author.book_set.all %}
+    <div>
+        <h5><a href='{% url 'book-detail' book.id %}'>{{ book.title }}</a> <span>( {{ book.bookinstance_set.count }})</span></h5>
+        <p>{{ book.summary }}</p>
+    </div>
+    {% empty %}
+    <p>No book found by this author</p>
+    {% endfor %}
+    
+</div>
+{% endblock %}

@@ -2,7 +2,47 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Book, Author, BookInstance, Genre, Country
 
+from django.views import generic
+
 # Create your views here.
+
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'
+    paginate_by = 3
+
+    # queryset = Book.objects.filter(title__icontains='var')[:5]
+    def get_queryset(self):
+        # return Book.objects.filter(title__icontains='war')[:5]
+        return Book.objects.filter()[:5]
+    
+
+    # Demo for changing the get_context_data function
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        # context = super(BookListView, self).get_context_data(**kwargs)
+        # No need to specify the class name and self in Python3
+        context = super().get_context_data(**kwargs)
+
+        # Create any data and add it to the context
+        context['some_data'] = 'This is some data'
+        return context
+
+    
+class BookDetailView(generic.DetailView):
+    model = Book
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    
+    # def get_context_data(self):
+    #     return Book.objects.all().annotate(available_count = models.Count('bookinstance', filter=models.Q(bookinstance__status='a')))
+
 
 def index(request):
     # return HttpResponse("This is the context from catalog index.")
@@ -36,3 +76,5 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable.
     return render(request, 'index.html', context=context)
+
+
