@@ -1,8 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Book, Author, BookInstance, Genre, Country
-
 from django.views import generic
+
+from .models import Book, Author, BookInstance, Genre, Country
 
 # Create your views here.
 
@@ -43,6 +44,19 @@ class AuthorDetailView(generic.DetailView):
     # def get_context_data(self):
     #     return Book.objects.all().annotate(available_count = models.Count('bookinstance', filter=models.Q(bookinstance__status='a')))
 
+class LoanedBookByUserListView(LoginRequiredMixin, generic.ListView):
+    """ Generic class-based view listing books on loan to current user. """
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return (
+            BookInstance.objects
+            .filter(borrower=self.request.user)
+            .filter(status__exact='o')
+            .order_by('due_back')
+        )
 
 def index(request):
     # return HttpResponse("This is the context from catalog index.")
@@ -82,5 +96,3 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable.
     return render(request, 'index.html', context=context)
-
-
