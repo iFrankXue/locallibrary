@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+# from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
@@ -57,6 +58,25 @@ class LoanedBookByUserListView(LoginRequiredMixin, generic.ListView):
             .filter(status__exact='o')
             .order_by('due_back')
         )
+    
+class LoanedBookByAllUsersListView(PermissionRequiredMixin, generic.ListView):
+    """ Permission required to specific users who has the permission. """
+    permission_required = 'catalog.can_mark_returned'
+    permission_denied_message = 'Sorry, you do not have permission to access this page.'
+    raise_exception = False
+
+    """ Generic class-based view listing books on loan to all users. """
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_all_users.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return (
+            BookInstance.objects
+            .filter(status__exact='o')
+            .order_by('due_back')
+        )
+    
 
 def index(request):
     # return HttpResponse("This is the context from catalog index.")
