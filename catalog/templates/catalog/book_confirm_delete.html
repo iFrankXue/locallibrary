@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content  %}
+
+Delete Book: {{ book }}
+
+{% if book.bookinstance_set.all %}
+<p>You cannot delete this book until all their instance has been deleted:</p>
+
+<ul>
+    {% for bookinstance in book.bookinstance_set.all %}
+    <li>
+        Instance {{ forloop.counter }}: Status- {{ bookinstance.get_status_display }}
+        {% if bookinstance.status == 'o' %}, Borrower: {{ bookinstance.borrower }}{% endif %};
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>Are you sure want to delete this book?</p>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, delete" />
+</form>
+
+{% endif %}
+
+{% endblock content  %}

@@ -74,7 +74,7 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length=13, unique=True, help_text='13 Character <a href="https://www.isbn-insternational.org/content/what-isbn">ISBN</a>')
     # genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
     genre = models.ManyToManyField('Genre', help_text='Select a genre for this book')
-    Language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ['title', 'author']
@@ -107,7 +107,7 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True, help_text='Select the country of the author')
     date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField(null=True, blank=True)
+    date_of_death = models.DateField('Died', null=True, blank=True)
  
     class Meta:
         ordering = ['last_name', 'first_name']
@@ -150,7 +150,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
-        permissions = (("can_mark_returned", "Set book as returned"),)
+        permissions = (("can_mark_returned", "Set book as returned"), ("can_renew", "Renew the due_back of a book"))
 
     def display_author(self):
         return f'{self.book.author.first_name} {self.book.author.last_name}' 

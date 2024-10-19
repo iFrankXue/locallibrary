@@ -18,7 +18,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-2">
+
                 {% block sidebar %}
+                
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'index' %}">Home</a></li>
                     <li><a href="{% url 'books' %}">All books</a></li>
@@ -43,8 +45,16 @@
                 <ul>
                     <li>Staff</li>    
                     <li><a href="{% url 'all-borrowed' %}">All borrowed</a></li>
+
+                    {% if user.is_staff %}
+                    <li><a href="{% url 'author-create' %}">Create author</a></li>
+                    <li><a href="{% url 'book-create' %}">Create book</a></li>
+                    {% endif %}
+
                 </ul>
                 {% endif %}
+
+
                 {% endblock %}
             </div>
             <div class="col-sm-10 ">
