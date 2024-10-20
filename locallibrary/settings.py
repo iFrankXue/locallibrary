@@ -41,7 +41,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ## For example, for a site URL at 'frankxue.pythonanywhere.com'
 ## (replace the string below with your own site URL):
 # ALLOWED_HOSTS = ['frankxue.pythonanywhere.com', '127.0.0.1']
-ALLOWED_HOSTS = ['web-production-98b66.up.railway.app', 'library.projects.frankxue.ca', '127.0.0.1']
+ALLOWED_HOSTS = ['web-production-5a14.up.railway.app', 'library.projects.frankxue.ca', '127.0.0.1']
 
 
 # During development, you can instead set just the base URL
@@ -55,7 +55,7 @@ ALLOWED_HOSTS = ['web-production-98b66.up.railway.app', 'library.projects.frankx
 ## (replace the string below with your own site URL):
 # CSRF_TRUSTED_ORIGINS = ['https://frankxue.pythonanywhere.com']
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-98b66.up.railway.app', 'https://library.projects.frankxue.ca']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-5a14.up.railway.app', 'https://library.projects.frankxue.ca']
 
 # During development/for this tutorial you can instead set just the base URL
 # CSRF_TRUSTED_ORIGINS = ['https://*.pythonanywhere.com']
